@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Service_System.Entity
 {
-    class Admin
+    public class Admin
     {
+        private string Login { get; set; }
+
+
+
+
+
     }
 }
