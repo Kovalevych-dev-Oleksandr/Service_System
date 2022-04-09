@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service_System.Entity
 {
-    public class Admin
+    class BaseEntity
     {
-        private string Login;
-        public string GetLogin() => Login;
-
-        public void SetLogin(string login) => this.Login = login;
     }
 }
