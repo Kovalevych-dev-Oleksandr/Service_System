@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service_System.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,9 @@ namespace Service_System
     {
         public MainWindow()
         {
-
-
-
+            Admin admin = new Admin();
+            admin.SetLogin("login");
+            Console.WriteLine(admin.GetLogin());
             InitializeComponent();
         }
     }
