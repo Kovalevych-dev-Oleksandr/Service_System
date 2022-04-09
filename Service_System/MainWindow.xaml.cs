@@ -22,6 +22,9 @@ namespace Service_System
     {
         public MainWindow()
         {
+
+
+
             InitializeComponent();
         }
     }
