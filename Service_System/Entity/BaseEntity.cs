@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Service_System.Entity
 {
-    class BaseEntity
+    public abstract class BaseEntity
     {
+        private int? Id;
+        public int GetId() => (int)Id;
+        public void SetId(int? id) => Id = id;
     }
 }

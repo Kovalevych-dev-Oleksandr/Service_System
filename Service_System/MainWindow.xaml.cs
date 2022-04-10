@@ -23,9 +23,6 @@ namespace Service_System
     {
         public MainWindow()
         {
-            Admin admin = new Admin();
-            admin.SetLogin("login");
-            Console.WriteLine(admin.GetLogin());
             InitializeComponent();
         }
     }
