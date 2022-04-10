@@ -1,5 +1,4 @@
-﻿using Service_System.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Service_System
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Interaction logic for RegWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RegWindow : Window
     {
-        public MainWindow()
+        public RegWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Reg_Win_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Hide();
         }
     }
 }
