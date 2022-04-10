@@ -25,7 +25,7 @@ namespace Service_System.Dao
             return Instance;
         }
 
-        public bool Create(string login, string pass)
+        public bool CreateAdmin(string login, string pass)
         {
             string sql = "INSERT INTO admins ( Login, Password,) VALUES (@Login, @Password);";
             MySqlCommand command = new MySqlCommand(sql, DataBaseConnection.GetConection());
@@ -45,6 +45,7 @@ namespace Service_System.Dao
                 return false;
             }
         }
+       
         private bool IsExistAdmin(string login, string pass)
         {
             List<Admin> list = Instance.FindAllAdmin();
