@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service_System.Dao
+namespace Service_System.DAO
 {
     public class Dao
     {
