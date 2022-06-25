@@ -6,25 +6,19 @@ using System.Threading.Tasks;
 
 namespace Service_System.Entity
 {
-    public class Admin : BaseEntity
+    public class Admin
     {
         public Admin() { }
-        public Admin(int id, string login, string password)
-        {
-            SetId(id);
-            this.Login = login;
-            this.Password = password;
+        public Admin(int id, string login, string password ) {
+
+            Id = id;
+            Login = login;
+            Password = password;
         }
-        private string Login;
+       
+        public int Id { get; set; }
+        public string Login { get; set; }
 
-        private string Password;
-
-        public string GetPassword() => Password;
-
-        public void SetPassword(string password) => this.Password = password;
-
-        public string GetLogin() => Login;
-
-        public void SetLogin(string login) => this.Login = login;
+        public string Password { get; set; }
     }
 }

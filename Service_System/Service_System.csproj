@@ -74,7 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Service\Service.cs" />
+    <Compile Include="Service\AdminServise.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -83,7 +83,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dao\Dao.cs" />
+    <Compile Include="Dao\AdminDao.cs" />
     <Compile Include="DB\DataBaseConnection.cs" />
     <Compile Include="Entity\Admin.cs" />
     <Compile Include="Entity\BaseEntity.cs" />
