@@ -1,5 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Service_System.Dao;
+
 using Service_System.DB;
 using Service_System.Entity;
 using System;
@@ -16,6 +17,7 @@ namespace Service_System.DAO
         private static readonly MySqlConnection Connection = DataBaseConnection.GetConection();
         private static MySqlDataReader DATA_READER;
         private static AdminDao Instance;
+
         private AdminDao() { }
 
         public static AdminDao GetInstance()

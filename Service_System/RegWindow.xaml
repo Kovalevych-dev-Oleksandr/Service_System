@@ -5,8 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_System"
         mc:Ignorable="d"
-        Title="RegWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="RegWindow" Height="515" Width="365" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+	<Grid Background="#ffdadada">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="25"/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="350"/>
+			<RowDefinition Height="90"/>
+		</Grid.RowDefinitions>
+
+		<Grid x:Name="ToolBar" Grid.Row="0" MouseDown="ToolBar_MouseDown" >
+			<Polygon Fill="DarkViolet" Opacity="1"
+            Points="107,0,115,7,249,7,257,0"/>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
+
+				<Button x:Name="MinButton" Click="MinButton_Click" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="DarkViolet">
+					<materialDesign:PackIcon Kind="WindowMinimize"/>
+				</Button>
+
+				<Button x:Name="ExitButton" Click="ExitButton_Click" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="DarkViolet">
+					<materialDesign:PackIcon Kind="Power"/>
+				</Button>
+
+			</StackPanel>
+		</Grid>
+
+		<Grid Grid.Row="2" >
+			<Border Margin="10" Background="White" VerticalAlignment="Center" Padding="30" CornerRadius="20">
+				<Border.Effect>
+					<DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="1"></DropShadowEffect>
+				</Border.Effect>
+				<StackPanel>
+					<TextBlock Text="Dzień dobry" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+
+					<Grid>
+						<Button Click="Button_Auth_Win_Click" Content="Logowanie" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}"/>
+					</Grid>
+
+					<TextBox x:Name="TextBoxLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+					<PasswordBox x:Name="PassBox" materialDesign:HintAssist.Hint="Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+					<PasswordBox x:Name="PassBox2" materialDesign:HintAssist.Hint="Powtórz Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+					<TextBox x:Name="TextBoxEmail" materialDesign:HintAssist.Hint="Email" Margin="0 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+					<Grid Margin="15">
+						<Button x:Name="RegButton"  Click="Button_Reg_Click" Content="Zarejestruj się" HorizontalAlignment="Center"/>
+					</Grid>
+				</StackPanel>
+			</Border>
+		</Grid>
+
+	</Grid>
 </Window>

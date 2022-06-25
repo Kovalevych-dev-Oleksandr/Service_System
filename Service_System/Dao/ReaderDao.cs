@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Service_System.DB;
 using Service_System.Entity;
 using System;
@@ -156,7 +156,6 @@ namespace Service_System.Dao
                 return false;
             }
         }
-
 
         private bool CheckId(string id, string sql)
         {

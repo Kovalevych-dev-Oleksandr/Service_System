@@ -37,6 +37,7 @@ namespace Service_System.Dao
                 DATA_READER = command.ExecuteReader();
                 Connection.Close();
                 return CheckCreate(autor, nameBook, getId(GET_MAX_ID_BOOK));
+
             }
             catch (Exception)
             {
@@ -170,6 +171,7 @@ namespace Service_System.Dao
                 DATA_READER.Close();
                 Connection.Close();
                 return UtilDao.CheckId(id, "SELECT id_book from people.library WHERE id_book=@id;");
+
             }
             catch (Exception)
             {
@@ -251,6 +253,7 @@ namespace Service_System.Dao
             }
 
         }
+        
         private bool CheckCreate(string autor, string bookName, int id_book)
         {
             bool isUpdate = false;
@@ -291,8 +294,6 @@ namespace Service_System.Dao
             Connection.Close();
             return i;
         }
-
-       
     }
 }
 
