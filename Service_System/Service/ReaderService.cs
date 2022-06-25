@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service_System.Service
 {
-    public class AdminServise
-    {/*
-        private static Dao dao = Dao.GetInstance();*/
+    class ReaderService
+    {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Service_System.Dao;
 using Service_System.DB;
 using Service_System.Entity;
 using System;
@@ -14,7 +15,7 @@ namespace Service_System.DAO
         private const string SelectAdmin = "SELECT id, login, password from admins WHERE id=@id;";
         private static readonly MySqlConnection Connection = DataBaseConnection.GetConection();
         private static MySqlDataReader DATA_READER;
-        public static AdminDao Instance;
+        private static AdminDao Instance;
         private AdminDao() { }
 
         public static AdminDao GetInstance()
@@ -26,7 +27,7 @@ namespace Service_System.DAO
             return Instance;
         }
 
-        public bool CreateAdmin(string login, string pass)
+        public bool Create(string login, string pass)
         { 
             string sql = "INSERT INTO admins ( Login, Password,) VALUES (@Login, @Password);";
             MySqlCommand command = new MySqlCommand(sql, Connection);
@@ -46,21 +47,8 @@ namespace Service_System.DAO
                 return false;
             }
         }
-       
-        private bool IsExistAdmin(string login, string pass)
-        {
-            List<Admin> admins = FindAllAdmin();
-            for(int i = 0; i < admins.Count; i++)
-            {
-                if (admins[i].Login==login)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
-        public List<Admin> FindAllAdmin()
+        public List<Admin> FindAll()
         {
             MySqlCommand command = new MySqlCommand("SELECT Id,Login,Password FROM admins;", Connection);
             try
@@ -85,7 +73,7 @@ namespace Service_System.DAO
             }
         }
 
-        public Admin FindByIdAdmin(string id)
+        public Admin FindById(string id)
         {
             MySqlCommand command = new MySqlCommand(SelectAdmin, Connection);
             try
@@ -112,28 +100,24 @@ namespace Service_System.DAO
                 return null;
             }
         }
-        /*public bool Delete(string id, string doCase)
+        public bool Delete(string id)
         {
             string sql;
             MySqlCommand command;
             try
             {
-               
-                        if (FindByIdReaders(id) == null)
-                        {
-                            return false;
-                        }
-                        Connection.Open();
-                        sql = "DELETE FROM people.readers WHERE id_readers = @id;";
-                        command = new MySqlCommand(sql, Connection);
-                        command.Parameters.AddWithValue("@id", id);
-                        DATA_READER = command.ExecuteReader();
-                        DATA_READER.Close();
-                        Connection.Close();
-                        return CheckId(id, "SELECT  id_readers from people.readers WHERE id_readers=@id;");
-                    default:
-                        return false;
-                
+                if (FindById(id) == null)
+                {
+                    return false;
+                }
+                Connection.Open();
+                sql = "DELETE FROM people.admin WHERE id = @id;";
+                command = new MySqlCommand(sql, Connection);
+                command.Parameters.AddWithValue("@id", id);
+                DATA_READER = command.ExecuteReader();
+                DATA_READER.Close();
+                Connection.Close();
+                return UtilDao.CheckId(id, "SELECT  id from people.readers WHERE id = @id;");
             }
             catch (Exception)
             {
@@ -141,7 +125,19 @@ namespace Service_System.DAO
                 Connection.Close();
                 return false;
             }
-    }*/
+        }
 
+        private bool IsExistAdmin(string login, string pass)
+        {
+            List<Admin> admins = FindAll();
+            for (int i = 0; i < admins.Count; i++)
+            {
+                if (admins[i].Login == login)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

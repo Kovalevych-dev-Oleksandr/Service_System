@@ -27,7 +27,7 @@ namespace Service_System.Dao
             return Instance;
         }
 
-        public bool CreateReaders(string name, string surname, string email)
+        public bool Create(string name, string surname, string email)
         {
             string sql = "INSERT INTO people.readers ( name, surname, email) VALUES (@name, @surname, @email);";
             MySqlCommand command = new MySqlCommand(sql, Connection);
@@ -49,7 +49,7 @@ namespace Service_System.Dao
             }
         }
 
-        public bool UpdateReaders(string name, string surname, string email, int id)
+        public bool Update(string name, string surname, string email, int id)
         {
             string sql = "Update people.readers Set name = @name, surname = @surname, email=@email where id_readers = @id;";
             MySqlCommand command = new MySqlCommand(sql, Connection);
@@ -73,7 +73,7 @@ namespace Service_System.Dao
             }
         }
 
-        public Reader FindByIdReaders(string id)
+        public Reader FindById(string id)
         {
             MySqlCommand command = new MySqlCommand(SelectReader, Connection);
             try
@@ -102,7 +102,7 @@ namespace Service_System.Dao
             }
         }
 
-        public List<Reader> FindAllReaders()
+        public List<Reader> FindAll()
         {
             MySqlCommand command = new MySqlCommand("SELECT name, surname, email, id_readers FROM people.readers;", Connection);
             try
@@ -130,43 +130,24 @@ namespace Service_System.Dao
             }
         }
 
-       /* public bool Delete(string id, string doCase)
+        public bool Delete(string id)
         {
             string sql;
             MySqlCommand command;
             try
             {
-                switch (doCase)
+                if (FindById(id) == null)
                 {
-                    case "book":
-                        if (FindByIdBook(id) == null)
-                        {
-                            return false;
-                        }
-                        Connection.Open();
-                        sql = "DELETE FROM people.library WHERE id_book = @id;";
-                        command = new MySqlCommand(sql, Connection);
-                        command.Parameters.AddWithValue("@id", id);
-                        DATA_READER = command.ExecuteReader();
-                        DATA_READER.Close();
-                        Connection.Close();
-                        return CheckId(id, "SELECT id_book from people.library WHERE id_book=@id;");
-                    case "reader":
-                        if (FindByIdReaders(id) == null)
-                        {
-                            return false;
-                        }
-                        Connection.Open();
-                        sql = "DELETE FROM people.readers WHERE id_readers = @id;";
-                        command = new MySqlCommand(sql, Connection);
-                        command.Parameters.AddWithValue("@id", id);
-                        DATA_READER = command.ExecuteReader();
-                        DATA_READER.Close();
-                        Connection.Close();
-                        return CheckId(id, "SELECT  id_readers from people.readers WHERE id_readers=@id;");
-                    default:
-                        return false;
+                    return false;
                 }
+                Connection.Open();
+                sql = "DELETE FROM people.readers WHERE id_readers = @id;";
+                command = new MySqlCommand(sql, Connection);
+                command.Parameters.AddWithValue("@id", id);
+                DATA_READER = command.ExecuteReader();
+                DATA_READER.Close();
+                Connection.Close();
+                return CheckId(id, "SELECT  id_readers from people.readers WHERE id_readers=@id;");
             }
             catch (Exception)
             {
@@ -174,7 +155,7 @@ namespace Service_System.Dao
                 Connection.Close();
                 return false;
             }
-        }*/
+        }
 
 
         private bool CheckId(string id, string sql)
