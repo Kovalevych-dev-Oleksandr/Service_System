@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Service_System.DB;
 using Service_System.Entity;
 using System;
 using System.Collections.Generic;
@@ -6,17 +7,16 @@ using System.Collections.Generic;
 namespace Service_System.Dao
 {
     public class BooksDao
-   {
-        private const string ConnectionStr = "server=localhost;user=root;database=people;password=Alyakoval;";
+    {
         private const string SelectBook = "SELECT autor, book_name, date_rent, id_readers, id_book from people.library WHERE id_book=@id;";
         private const string GET_MAX_ID_BOOK = "SELECT max(id_book) FROM people.library;";
-        private static readonly MySqlConnection Connection = new MySqlConnection(ConnectionStr);
+        private static readonly MySqlConnection Connection = DataBaseConnection.GetConection();
         private static MySqlDataReader DATA_READER;
 
         private static BooksDao Instance;
         private BooksDao() { }
 
-        public BooksDao GetInstanse()
+        public static BooksDao GetInstanse()
         {
             if (Instance == null)
             {
@@ -24,7 +24,8 @@ namespace Service_System.Dao
             }
             return Instance;
         }
-        public bool CreateBooks(string autor, string nameBook)
+
+        public bool Create(string autor, string nameBook)
         {
             string sql = "INSERT INTO people.library (autor, book_name) VALUES (@autor, @book_name);";
             MySqlCommand command = new MySqlCommand(sql, Connection);
@@ -35,7 +36,8 @@ namespace Service_System.Dao
                 command.Parameters.AddWithValue("@book_name", nameBook);
                 DATA_READER = command.ExecuteReader();
                 Connection.Close();
-                return CheckCreateBooks(autor, nameBook, getId(GET_MAX_ID_BOOK));
+                return CheckCreate(autor, nameBook, getId(GET_MAX_ID_BOOK));
+
             }
             catch (Exception)
             {
@@ -45,7 +47,7 @@ namespace Service_System.Dao
             }
         }
       
-        public bool UpdateBooks(string autor, string bookName, int id)
+        public bool Update(string autor, string bookName, int id)
         {
             string sql = "Update people.library Set autor = @autor, book_name = @book_name  where id_book = @id;";
             MySqlCommand command = new MySqlCommand(sql, Connection);
@@ -58,7 +60,7 @@ namespace Service_System.Dao
                 DATA_READER = command.ExecuteReader();
                 DATA_READER.Close();
                 Connection.Close();
-                return CheckUpdateBooks(autor, bookName, id);
+                return CheckUpdate(autor, bookName, id);
             }
             catch (Exception)
             {
@@ -68,7 +70,7 @@ namespace Service_System.Dao
             }
         }
        
-        public Library FindByIdBook(string id)
+        public Library FindById(string id)
         {
             MySqlCommand command = new MySqlCommand(SelectBook, Connection);
             try
@@ -116,8 +118,8 @@ namespace Service_System.Dao
                 return null;
             }
         }
-       
-        public List<Library> FindAllBoks()
+
+        public List<Library> FindAll()
         {
             MySqlCommand command = new MySqlCommand("SELECT autor, book_name, date_rent, id_readers, id_book from people.library", Connection);
             try
@@ -150,43 +152,26 @@ namespace Service_System.Dao
                 return new List<Library>();
             }
         }
-       /* public bool Delete(string id, string doCase)
+       
+        public bool Delete(string id)
         {
             string sql;
             MySqlCommand command;
             try
             {
-                switch (doCase)
+                if (FindById(id) == null)
                 {
-                    case "book":
-                        if (FindByIdBook(id) == null)
-                        {
-                            return false;
-                        }
-                        Connection.Open();
-                        sql = "DELETE FROM people.library WHERE id_book = @id;";
-                        command = new MySqlCommand(sql, Connection);
-                        command.Parameters.AddWithValue("@id", id);
-                        DATA_READER = command.ExecuteReader();
-                        DATA_READER.Close();
-                        Connection.Close();
-                        return CheckId(id, "SELECT id_book from people.library WHERE id_book=@id;");
-                    case "reader":
-                        if (FindByIdReaders(id) == null)
-                        {
-                            return false;
-                        }
-                        Connection.Open();
-                        sql = "DELETE FROM people.readers WHERE id_readers = @id;";
-                        command = new MySqlCommand(sql, Connection);
-                        command.Parameters.AddWithValue("@id", id);
-                        DATA_READER = command.ExecuteReader();
-                        DATA_READER.Close();
-                        Connection.Close();
-                        return CheckId(id, "SELECT  id_readers from people.readers WHERE id_readers=@id;");
-                    default:
-                        return false;
+                    return false;
                 }
+                Connection.Open();
+                sql = "DELETE FROM people.library WHERE id_book = @id;";
+                command = new MySqlCommand(sql, Connection);
+                command.Parameters.AddWithValue("@id", id);
+                DATA_READER = command.ExecuteReader();
+                DATA_READER.Close();
+                Connection.Close();
+                return UtilDao.CheckId(id, "SELECT id_book from people.library WHERE id_book=@id;");
+
             }
             catch (Exception)
             {
@@ -195,7 +180,7 @@ namespace Service_System.Dao
                 return false;
             }
         }
-*/
+
         public bool rentBook(int idReader, int idBook, string date)
         {
             MySqlCommand command = new MySqlCommand("UPDATE people.library SET date_rent=@date, id_readers=@idReaders WHERE id_book=@id;", Connection);
@@ -208,7 +193,7 @@ namespace Service_System.Dao
                 DATA_READER = command.ExecuteReader();
                 DATA_READER.Close();
                 Connection.Close();
-                Library library = FindByIdBook(idBook.ToString());
+                Library library = FindById(idBook.ToString());
                 return library.IdReader == idReader && library.Id == idBook;
             }
             catch (Exception)
@@ -229,7 +214,7 @@ namespace Service_System.Dao
                 DATA_READER = command.ExecuteReader();
                 DATA_READER.Close();
                 Connection.Close();
-                Library library = FindByIdBook(idBook.ToString());
+                Library library = FindById(idBook.ToString());
                 return library.IdReader == null && library.Date_rent == "";
             }
             catch (Exception)
@@ -239,32 +224,8 @@ namespace Service_System.Dao
                 return false;
             }
         }
-        private bool CheckId(string id, string sql)
-        {
-            bool isDelete = true;
-            MySqlCommand command = new MySqlCommand(sql, Connection);
-            try
-            {
-                Connection.Open();
-                command.Parameters.AddWithValue("@id", id);
-                DATA_READER = command.ExecuteReader();
-                while (DATA_READER.Read())
-                {
-                    isDelete = false;
-                }
-                DATA_READER.Close();
-                Connection.Close();
-                return isDelete;
-            }
-            catch (Exception)
-            {
-                DATA_READER.Close();
-                Connection.Close();
-                return false;
-            }
-        }
-
-        private bool CheckUpdateBooks(string autor, string bookName, int id_book)
+        
+        private bool CheckUpdate(string autor, string bookName, int id_book)
         {
             bool isUpdate = false;
             MySqlCommand command = new MySqlCommand(SelectBook, Connection);
@@ -292,7 +253,8 @@ namespace Service_System.Dao
             }
 
         }
-        private bool CheckCreateBooks(string autor, string bookName, int id_book)
+        
+        private bool CheckCreate(string autor, string bookName, int id_book)
         {
             bool isUpdate = false;
             MySqlCommand command = new MySqlCommand(SelectBook, Connection);
