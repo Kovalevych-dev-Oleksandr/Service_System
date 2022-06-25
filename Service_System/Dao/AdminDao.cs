@@ -1,13 +1,9 @@
 using MySql.Data.MySqlClient;
 using Service_System.Dao;
-
 using Service_System.DB;
 using Service_System.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service_System.DAO
 {
@@ -31,7 +27,7 @@ namespace Service_System.DAO
 
         public bool Create(string login, string pass)
         { 
-            string sql = "INSERT INTO admins ( Login, Password,) VALUES (@Login, @Password);";
+            string sql = "INSERT INTO admins ( login, password) VALUES (@Login, @Password);";
             MySqlCommand command = new MySqlCommand(sql, Connection);
             try
             {
@@ -40,7 +36,7 @@ namespace Service_System.DAO
                 command.Parameters.AddWithValue("@Password", pass);
                 DATA_READER = command.ExecuteReader();
                 Connection.Close();
-                return IsExistAdmin(login, pass);
+                return true;
             }
             catch (Exception)
             {
@@ -52,7 +48,7 @@ namespace Service_System.DAO
 
         public List<Admin> FindAll()
         {
-            MySqlCommand command = new MySqlCommand("SELECT Id,Login,Password FROM admins;", Connection);
+            MySqlCommand command = new MySqlCommand("SELECT id, login, password FROM admins;", Connection);
             try
             {
                 Connection.Open();
@@ -113,13 +109,13 @@ namespace Service_System.DAO
                     return false;
                 }
                 Connection.Open();
-                sql = "DELETE FROM people.admin WHERE id = @id;";
+                sql = "DELETE FROM admins WHERE id = @id;";
                 command = new MySqlCommand(sql, Connection);
                 command.Parameters.AddWithValue("@id", id);
                 DATA_READER = command.ExecuteReader();
                 DATA_READER.Close();
                 Connection.Close();
-                return UtilDao.CheckId(id, "SELECT  id from people.readers WHERE id = @id;");
+                return UtilDao.CheckId(id, "SELECT  id from adims WHERE id = @id;");
             }
             catch (Exception)
             {
@@ -129,17 +125,8 @@ namespace Service_System.DAO
             }
         }
 
-        private bool IsExistAdmin(string login, string pass)
+       /* private bool IsExistAdmin(string login, string pass)
         {
-            List<Admin> admins = FindAll();
-            for (int i = 0; i < admins.Count; i++)
-            {
-                if (admins[i].Login == login)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        }*/
     }
 }

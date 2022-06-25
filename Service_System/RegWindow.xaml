@@ -44,7 +44,7 @@
 						<Button Click="Button_Auth_Win_Click" Content="Logowanie" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}"/>
 					</Grid>
 
-					<TextBox x:Name="TextBoxLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+					<TextBox x:Name="TextBoxLogin" materialDesign:HintAssist.Hint="Login" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="TextBoxLogin_TextChanged"/>
 					<PasswordBox x:Name="PassBox" materialDesign:HintAssist.Hint="Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
 					<PasswordBox x:Name="PassBox2" materialDesign:HintAssist.Hint="Powtórz Hasło" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
 					<TextBox x:Name="TextBoxEmail" materialDesign:HintAssist.Hint="Email" Margin="0 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>

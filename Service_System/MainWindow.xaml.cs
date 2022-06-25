@@ -1,19 +1,7 @@
-﻿using Service_System.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Service_System.Service;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Media.Animation;
 
 namespace Service_System
 {
@@ -22,6 +10,8 @@ namespace Service_System
     /// </summary>
     public partial class MainWindow : Window
     {
+        private AdminService adminService = new AdminService();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,7 +35,7 @@ namespace Service_System
                 TextBoxLogin.Background = Brushes.Transparent;
                 PassBox.ToolTip = "";
                 PassBox.Background = Brushes.Transparent;
-                // DB.GetInstance().FindAdmin(TextBoxLogin.Text.Trim(), PassBox.Password.Trim());
+           
                 MessageBox.Show("Witamy w systemie");
                 ProgView progView = new ProgView();
                 progView.Show();

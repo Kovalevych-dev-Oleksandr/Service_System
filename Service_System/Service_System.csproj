@@ -110,7 +110,6 @@
       <DependentUpon>RegWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\AdminService.cs" />
-    <Compile Include="Service\AdminServise.cs" />
     <Compile Include="Service\BooksService.cs" />
     <Compile Include="Service\ReaderService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

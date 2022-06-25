@@ -1,17 +1,9 @@
-﻿using Service_System.DAO;
+﻿using Service_System.Service;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 
 namespace Service_System
@@ -21,6 +13,8 @@ namespace Service_System
     /// </summary>
     public partial class RegWindow : Window
     {
+        private AdminService adminService = new AdminService();
+
         public RegWindow()
         {
             InitializeComponent();
@@ -65,6 +59,7 @@ namespace Service_System
                 TextBoxEmail.ToolTip = "";
                 TextBoxEmail.Background = Brushes.Transparent;
                 MessageBox.Show("Konto założonę");
+                adminService.Create(TextBoxLogin.Text.Trim(), PassBox.Password.Trim());
                 // Dao.GetInstance().CreateAdmin(TextBoxLogin.Text.Trim(), PassBox.Password.Trim());
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
@@ -94,6 +89,11 @@ namespace Service_System
         private void ToolBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void TextBoxLogin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
