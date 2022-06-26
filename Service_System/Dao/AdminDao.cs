@@ -33,14 +33,16 @@ namespace Service_System.DAO
         }
 
         public bool Create(string login, string pass)
-        { 
+        {
+            if (IsAdmiLoginExist(login))
+            {
+                return false;
+            }
+
             MySqlCommand command = new MySqlCommand("INSERT INTO admins ( login, password ) VALUES (@Login, @Password);", Connection);
             try
             {
-                if( IsAdmiLoginExist(login) || IsAdmiPasswordExist(pass))
-                {
-                    return false;
-                }
+                
                 Connection.Open();
                 command.Parameters.AddWithValue("@Login", login);
                 command.Parameters.AddWithValue("@Password", pass);
@@ -114,14 +116,18 @@ namespace Service_System.DAO
             MySqlCommand command = new MySqlCommand("SELECT login from admins WHERE login=@login;", Connection);
             try
             {
+                bool is_exist = false;
                 Connection.Open();
                 command.Parameters.AddWithValue("@login", login);
                 DATA_READER = command.ExecuteReader();
-                while (DATA_READER.Read()) { 
+                while (DATA_READER.Read()) 
+                {
 
-                    return login == DATA_READER[0].ToString();
+                    is_exist = login == DATA_READER[0].ToString();
                 }
-                return false;
+                DATA_READER.Close();
+                Connection.Close();
+                return is_exist;
             }
             catch (Exception)
             {
@@ -136,15 +142,19 @@ namespace Service_System.DAO
             MySqlCommand command = new MySqlCommand("SELECT password from admins WHERE password=@pass;", Connection);
             try
             {
+                bool is_exist = false;
                 Connection.Open();
                 command.Parameters.AddWithValue("@pass", password);
                 DATA_READER = command.ExecuteReader();
                 while (DATA_READER.Read())
                 {
 
-                    return password == DATA_READER[0].ToString();
+                    is_exist= password == DATA_READER[0].ToString();
                 }
-                return false;
+                DATA_READER.Close();
+                Connection.Close();
+                return is_exist;
+                
             }
             catch (Exception)
             {
