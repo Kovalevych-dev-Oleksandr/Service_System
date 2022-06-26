@@ -24,5 +24,6 @@ namespace Service_System.View
         {
             InitializeComponent();
         }
+        
     }
 }
