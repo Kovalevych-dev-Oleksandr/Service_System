@@ -10,6 +10,7 @@ namespace Service_System.DAO
     public class AdminDao
     {
         private const string SelectAdmin = "SELECT id, login, password from admins WHERE id=@id;";
+        private const string GET_MAX_ID_ADMINS = "SELECT max(id) FROM admins;";
         private static readonly MySqlConnection Connection = DataBaseConnection.GetConection();
         private static MySqlDataReader DATA_READER;
         private static AdminDao Instance;
@@ -25,18 +26,27 @@ namespace Service_System.DAO
             return Instance;
         }
 
+        public bool LogIn(string login, string pass)
+        {
+            return IsAdmiPasswordExist(pass) && IsAdmiLoginExist(login);
+
+        }
+
         public bool Create(string login, string pass)
         { 
-            string sql = "INSERT INTO admins ( login, password) VALUES (@Login, @Password);";
-            MySqlCommand command = new MySqlCommand(sql, Connection);
+            MySqlCommand command = new MySqlCommand("INSERT INTO admins ( login, password ) VALUES (@Login, @Password);", Connection);
             try
             {
-               Connection.Open();
+                if( IsAdmiLoginExist(login) || IsAdmiPasswordExist(pass))
+                {
+                    return false;
+                }
+                Connection.Open();
                 command.Parameters.AddWithValue("@Login", login);
                 command.Parameters.AddWithValue("@Password", pass);
                 DATA_READER = command.ExecuteReader();
                 Connection.Close();
-                return true;
+                return IsAdmiLoginExist(login);
             }
             catch (Exception)
             {
@@ -98,6 +108,52 @@ namespace Service_System.DAO
                 return null;
             }
         }
+
+        private bool IsAdmiLoginExist(string login)
+        {
+            MySqlCommand command = new MySqlCommand("SELECT login from admins WHERE login=@login;", Connection);
+            try
+            {
+                Connection.Open();
+                command.Parameters.AddWithValue("@login", login);
+                DATA_READER = command.ExecuteReader();
+                while (DATA_READER.Read()) { 
+
+                    return login == DATA_READER[0].ToString();
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                DATA_READER.Close();
+                Connection.Close();
+                return false;
+            }
+        }
+
+        private bool IsAdmiPasswordExist(string password)
+        {
+            MySqlCommand command = new MySqlCommand("SELECT password from admins WHERE password=@pass;", Connection);
+            try
+            {
+                Connection.Open();
+                command.Parameters.AddWithValue("@pass", password);
+                DATA_READER = command.ExecuteReader();
+                while (DATA_READER.Read())
+                {
+
+                    return password == DATA_READER[0].ToString();
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                DATA_READER.Close();
+                Connection.Close();
+                return false;
+            }
+        }
+
         public bool Delete(string id)
         {
             string sql;
