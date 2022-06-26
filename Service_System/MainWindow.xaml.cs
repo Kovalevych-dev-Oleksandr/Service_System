@@ -35,11 +35,13 @@ namespace Service_System
                 TextBoxLogin.Background = Brushes.Transparent;
                 PassBox.ToolTip = "";
                 PassBox.Background = Brushes.Transparent;
-           
-                MessageBox.Show("Witamy w systemie");
-                ProgView progView = new ProgView();
-                progView.Show();
-                Close();
+                if (adminService.LogIn(TextBoxLogin.Text, PassBox.Password))
+                {
+                    MessageBox.Show("Witamy w systemie");
+                    new ProgView().Show();
+                    Close();
+                }
+                
             }
         }
 
