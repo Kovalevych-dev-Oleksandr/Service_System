@@ -37,7 +37,7 @@ namespace Service_System.DAO
             MySqlCommand command = new MySqlCommand("INSERT INTO admins ( login, password ) VALUES (@Login, @Password);", Connection);
             try
             {
-                if( IsAdmiLoginExist(login) || IsAdmiPasswordExist(pass))
+                if( IsAdmiLoginExist(login))
                 {
                     return false;
                 }
