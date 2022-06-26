@@ -8,6 +8,11 @@ namespace Service_System.Service
     {
         private AdminDao adminDao = AdminDao.GetInstance();
 
+        public bool LogIn(string login, string pass)
+        {
+            return adminDao.LogIn(login, pass);
+        }
+
         public bool Create(string login, string pass)
         {
             return adminDao.Create(login, pass);
