@@ -21,11 +21,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <Frame Grid.ColumnSpan="10" Grid.RowSpan="10" NavigationUIVisibility="Hidden" Content="{Binding CurPage}"/>
+        <Frame Grid.ColumnSpan="10" Grid.RowSpan="10" NavigationUIVisibility="Hidden" Content="{Binding CurPage}" Navigated="Frame_Navigated"/>
 
         <Grid x:Name="ToolBar" Grid.ColumnSpan="2" MouseDown="ToolBar_MouseDown" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
 
+                <Button x:Name="LogOut_Button" Click="LogOut_Button_Click" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="DarkViolet">
+                    <materialDesign:PackIcon Kind="Logout"/>
+                </Button>
+                
                 <Button x:Name="MinButton" Click="MinButton_Click" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="DarkViolet">
                     <materialDesign:PackIcon Kind="WindowMinimize"/>
                 </Button>
@@ -43,43 +47,37 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.Effect>
-                <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                <DropShadowEffect BlurRadius="20" Color="#ffdadada" RenderingBias="Quality" ShadowDepth="1"/>
             </Grid.Effect>
 
             <Grid Background="#FFA46FE4" Margin="0,-30,0,0">
                 <TextBlock Text="Logo_Servise_System" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFBC96EA" FontSize="16"/>
             </Grid>
 
-            <StackPanel Background="#debce7" Grid.Row="1">
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding OpenAccountPage}">
+            <StackPanel Background="#ffff" Grid.Row="1">
+                <Button Margin="10" Command="{Binding OpenAccountPage}">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Mój Kabinet" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding OpenOrderPage}" >
+                <Button Margin="10" Command="{Binding OpenOrderPage}" >
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="OrderBoolAscending" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Zamóweinia" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding OpenItemsPage}" >
+                <Button Margin="10" Command="{Binding OpenItemsPage}" >
                     <Grid Width="150">
-                        <materialDesign:PackIcon Kind="Diamond" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="Towary" FontFamily="Champagne &amp; Limousines"/>
+                        <materialDesign:PackIcon Kind="BookEdit" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="Książki" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding OpenDeliveryPage}" >
-                    <Grid Width="150">
-                        <materialDesign:PackIcon Kind="TruckDelivery" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="Dostawa" FontFamily="Champagne &amp; Limousines"/>
-                    </Grid>
-                </Button>
 
-                <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding OpenSettingsPage}" >
+                <Button Margin="10" Command="{Binding OpenSettingsPage}" >
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="Ustawienia" FontFamily="Champagne &amp; Limousines"/>

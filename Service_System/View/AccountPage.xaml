@@ -5,17 +5,37 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Service_System.View"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="600" d:DesignWidth="1024"
       Title="AccountPage">
 
-    <Grid Background="#ffdadada">
+    <Grid Background="#E6E6FA">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="ToolBar" Grid.ColumnSpan="2" >
+        <Grid x:Name="ToolBar" Grid.Row="0" MouseDown="ToolBar_MouseDown" >
+        </Grid>
 
-	</Grid>
-   </Grid>
+        <Grid Grid.Row="1">
+            <Image HorizontalAlignment="Center" Source="C:\Users\andri\source\Repos\Service_System\Service_System\Images\photo.png" Margin="439,10,446,429" Width="139" />
+
+            <StackPanel Margin="362,146,512,165">
+                <TextBlock Text="Imię i nazwisko" FontSize="15" Margin="0,12,0,0"/>
+                <TextBlock Text="Data Urodzenia" FontSize="15" Margin="0,12,0,0"/>
+                <TextBlock Text="Miejsce zamieszkania" Margin="0,12,0,0" FontSize="15"/>
+                <TextBlock Text="Kim jest"  Margin="0,12,0,0" FontSize="15"/>
+            </StackPanel>
+            <StackPanel Margin="541,146,325,165">
+                <TextBlock Text="Jan Kowalski" Margin="0,8,0,0" FontSize="18"/>
+                <TextBlock Text="09.09.1999" Margin="0,8,0,0" FontSize="18"/>
+                <TextBlock Text="Rzeszów" Margin="0,8,0,0" FontSize="18"/>
+                <TextBlock Text="Administrator" Margin="0,8,0,0" FontSize="18"/>
+            </StackPanel>
+            
+
+        </Grid>
+
+    </Grid>
 </Page>

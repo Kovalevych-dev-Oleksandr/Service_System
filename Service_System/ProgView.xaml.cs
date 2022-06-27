@@ -34,9 +34,21 @@ namespace Service_System
             this.WindowState = WindowState.Minimized;
         }
 
+        private void LogOut_Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Close();
+        }
+
         private void ToolBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void Frame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
         }
     }
 }
