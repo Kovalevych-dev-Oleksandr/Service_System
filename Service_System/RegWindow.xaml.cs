@@ -58,9 +58,16 @@ namespace Service_System
                 PassBox2.Background = Brushes.Transparent;
                 TextBoxEmail.ToolTip = "";
                 TextBoxEmail.Background = Brushes.Transparent;
-                MessageBox.Show("Konto założonę");
-                adminService.Create(TextBoxLogin.Text.Trim(), PassBox.Password.Trim());
-                // Dao.GetInstance().CreateAdmin(TextBoxLogin.Text.Trim(), PassBox.Password.Trim());
+
+                if (adminService.Create(TextBoxLogin.Text.Trim(), PassBox.Password.Trim()))
+                {
+                    MessageBox.Show("Konto założonę");
+                }
+                else
+                {
+                    MessageBox.Show("Login juz istnieje");
+                }
+            
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 Close();
